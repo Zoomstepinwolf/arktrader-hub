@@ -468,75 +468,154 @@
 
   /* STATS PANEL */
   .right-panel {
-    width: var(--panel-w);
+    width: 320px;
     background: var(--surface);
     border-left: 0.5px solid var(--border);
-    padding: 20px;
     flex-shrink: 0;
     position: sticky; top: var(--nav-h);
     height: calc(100vh - var(--nav-h));
     overflow-y: auto;
     transition: background 0.25s;
+    display: flex; flex-direction: column;
   }
+
+  /* Top bar: Run button + status */
+  .rp-topbar {
+    display: flex; align-items: center;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .rp-run-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 22px;
+    height: 52px; flex-shrink: 0;
+    background: #00a79e;
+    border: none; border-right: 0.5px solid var(--border);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .rp-run-btn:hover { background: #008c84; }
+  .rp-run-btn svg { width: 16px; height: 16px; }
+  .rp-status-bar {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0 14px;
+    gap: 4px;
+  }
+  .rp-status-text {
+    font-size: 12.5px; font-weight: 600; color: var(--text);
+    white-space: nowrap;
+  }
+  .rp-progress {
+    width: 100%; height: 3px;
+    background: var(--border);
+    border-radius: 99px; overflow: hidden;
+  }
+  .rp-progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #00a79e, #00d4c8);
+    border-radius: 99px;
+    animation: rp-idle 3s ease-in-out infinite;
+  }
+  @keyframes rp-idle {
+    0%,100% { width: 15%; margin-left: 0%; }
+    50%      { width: 30%; margin-left: 55%; }
+  }
+
+  /* Tabs */
   .panel-tabs {
     display: flex; gap: 0;
     border-bottom: 0.5px solid var(--border);
-    margin-bottom: 20px;
+    flex-shrink: 0;
   }
   .panel-tab {
     flex: 1; text-align: center;
-    padding: 8px 4px;
-    font-size: 12.5px; font-weight: 500;
-    color: var(--text3);
+    padding: 14px 4px;
+    font-size: 13px; font-weight: 600;
+    color: var(--text2);
     cursor: pointer; border: none; background: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -0.5px;
     transition: all 0.15s;
     font-family: 'DM Sans', sans-serif;
   }
-  .panel-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .panel-status {
+  .panel-tab:hover { color: var(--text); }
+  .panel-tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+  /* Summary body */
+  .rp-body { flex: 1; overflow-y: auto; padding: 20px; }
+
+  /* Info message box */
+  .rp-info-box {
     background: var(--surface2);
     border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 13.5px; color: var(--text2);
+    line-height: 1.65;
   }
-  .panel-status-row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 10px;
+  .rp-info-box strong { color: var(--text); font-weight: 700; }
+
+  /* What's this link */
+  .rp-whats-this {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: block;
   }
-  .status-badge {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 500; color: var(--text3);
+
+  /* Stats table */
+  .rp-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
   }
-  .stat-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px;
+  .rp-stats-table td {
+    padding: 10px 0;
+    font-size: 13px;
   }
-  .stat-card {
-    background: var(--surface2);
-    border-radius: 10px;
-    padding: 12px;
+  .rp-stats-table tr:not(:last-child) td {
+    border-bottom: 0.5px solid var(--border2);
   }
-  .stat-label { font-size: 10.5px; color: var(--text3); font-weight: 500; margin-bottom: 4px; }
-  .stat-value { font-size: 18px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text); }
-  .stat-value.green { color: var(--green); }
-  .stat-value.red { color: var(--red); }
-  .panel-section-title {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
-    text-transform: uppercase; color: var(--text3);
-    margin: 20px 0 10px;
+  .rp-stat-label {
+    color: var(--text); font-weight: 600;
+    width: 50%;
   }
+  .rp-stat-value {
+    color: var(--text2); font-weight: 400;
+    text-align: right;
+  }
+  .rp-stat-value.green { color: var(--green); font-weight: 600; }
+  .rp-stat-value.red   { color: var(--red);   font-weight: 600; }
+
+  /* Divider */
+  .rp-divider {
+    height: 0.5px; background: var(--border);
+    margin: 4px 0 20px;
+  }
+
+  /* Reset button */
   .reset-btn {
-    width: 100%; padding: 9px;
-    border-radius: 8px;
+    width: 100%; padding: 11px;
+    border-radius: 6px;
     border: 0.5px solid var(--border);
-    background: var(--surface2); color: var(--text2);
-    font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; margin-top: 16px;
+    background: var(--surface); color: var(--text2);
+    font-size: 13.5px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; margin-top: 4px;
     transition: all 0.15s;
   }
   .reset-btn:hover { border-color: var(--red); color: var(--red); }
+
+  /* Legacy compat */
+  .panel-section-title { display: none; }
+  .stat-grid, .stat-card, .stat-label, .stat-value { display: none; }
 
   /* WELCOME CARD */
   .welcome-card {
@@ -618,6 +697,13 @@
   .status-bar-dot { width: 6px; height: 6px; border-radius: 50%; }
   .status-bar-dot.green { background: var(--green); }
   .status-bar-url { margin-left: auto; }
+
+  /* Hide mobile-only elements by default (desktop) */
+  .mob-tab-bar  { display: none; }
+  .mob-run-bar  { display: none; }
+  .mob-menu-btn { display: none; }
+  .mob-drawer   { display: none; }
+  .mob-drawer-overlay { display: none; }
 
   /* VIEW PAGES */
   .page { display: none; }
@@ -1172,16 +1258,11 @@
     <div class="splash-ring"></div>
     <div class="splash-orbit-dot"></div>
     <div class="splash-orb">
-      <!-- Custom "A" logo: big A with "rktraders" riding inside -->
-      <svg class="splash-logo-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Bold A shape -->
-        <text x="60" y="88" text-anchor="middle"
-              font-family="'Syne',sans-serif" font-weight="800" font-size="108"
+      <!-- Custom "A" logo -->
+      <svg class="splash-logo-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <text x="60" y="90" text-anchor="middle"
+              font-family="'Syne',sans-serif" font-weight="800" font-size="95"
               fill="white" letter-spacing="-4">A</text>
-        <!-- "rktraders" nestled inside the A crossbar area -->
-        <text x="60" y="68" text-anchor="middle"
-              font-family="'DM Sans',sans-serif" font-weight="500" font-size="11"
-              fill="rgba(255,255,255,0.82)" letter-spacing="1.5">rktraders</text>
       </svg>
     </div>
   </div>
@@ -1256,7 +1337,7 @@
     50%      { box-shadow: 0 0 55px 18px rgba(232,75,26,0.6),  0 0 100px 40px rgba(232,75,26,0.25); }
   }
 
-  .splash-logo-svg { width: 90px; height: 75px; }
+  .splash-logo-svg { width: 100px; height: 100px; }
 
   /* text */
   .splash-title {
@@ -1945,50 +2026,74 @@
 
   <!-- RIGHT PANEL -->
   <aside class="right-panel">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <button class="run-btn" style="flex:1;justify-content:center;padding:10px">
-        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+
+    <!-- Top bar: Run + status -->
+    <div class="rp-topbar">
+      <button class="rp-run-btn" onclick="alert('Connect your Deriv account to run a bot.')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Run
       </button>
-      <div style="flex:1;text-align:right;font-size:12px;color:var(--text3)">Bot is not running</div>
+      <div class="rp-status-bar">
+        <span class="rp-status-text">Bot is not running</span>
+        <div class="rp-progress"><div class="rp-progress-bar"></div></div>
+      </div>
     </div>
 
+    <!-- Tabs -->
     <div class="panel-tabs">
       <button class="panel-tab active" onclick="switchPanelTab(this)">Summary</button>
       <button class="panel-tab" onclick="switchPanelTab(this)">Transactions</button>
       <button class="panel-tab" onclick="switchPanelTab(this)">Journal</button>
     </div>
 
-    <div class="panel-section-title">Session Stats</div>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total Stake</div>
-        <div class="stat-value">0.00</div>
+    <!-- Body -->
+    <div class="rp-body">
+
+      <!-- Info box -->
+      <div class="rp-info-box">
+        When you're ready to trade, hit <strong>Run</strong>.<br>
+        You'll be able to track your bot's<br>performance here.
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Total Payout</div>
-        <div class="stat-value">0.00</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">No. of Runs</div>
-        <div class="stat-value">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Profit/Loss</div>
-        <div class="stat-value">0.00</div>
-      </div>
+
+      <!-- What's this -->
+      <span class="rp-whats-this">What's this?</span>
+
+      <!-- Stats -->
+      <table class="rp-stats-table">
+        <tr>
+          <td class="rp-stat-label">Total stake</td>
+          <td class="rp-stat-value" id="rp-total-stake">0.00 USD</td>
+        </tr>
+        <tr>
+          <td class="rp-stat-label">Total payout</td>
+          <td class="rp-stat-value" id="rp-total-payout">0.00 USD</td>
+        </tr>
+        <tr>
+          <td class="rp-stat-label">No. of runs</td>
+          <td class="rp-stat-value" id="rp-num-runs">0</td>
+        </tr>
+      </table>
+
+      <div class="rp-divider"></div>
+
+      <table class="rp-stats-table">
+        <tr>
+          <td class="rp-stat-label">Contracts lost</td>
+          <td class="rp-stat-value" id="rp-contracts-lost">0</td>
+        </tr>
+        <tr>
+          <td class="rp-stat-label">Contracts won</td>
+          <td class="rp-stat-value" id="rp-contracts-won">0</td>
+        </tr>
+        <tr>
+          <td class="rp-stat-label">Total profit/loss</td>
+          <td class="rp-stat-value" id="rp-total-pl">0.00 USD</td>
+        </tr>
+      </table>
+
+      <button class="reset-btn">Reset</button>
+
     </div>
-    <div class="stat-grid" style="margin-top:10px">
-      <div class="stat-card">
-        <div class="stat-label">Won</div>
-        <div class="stat-value green">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Lost</div>
-        <div class="stat-value red">0</div>
-      </div>
-    </div>
-    <button class="reset-btn">Reset</button>
   </aside>
 </div>
 
@@ -2471,6 +2576,7 @@
   function updateBotStats() {
     const wr = bbStats.total ? ((bbStats.wins / bbStats.total) * 100).toFixed(1) + '%' : '—';
     const pl = bbStats.pl;
+    const losses = bbStats.total - bbStats.wins;
     const safeSet = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
     safeSet('bb-total', bbStats.total);
     safeSet('bb-winrate', wr);
@@ -2481,6 +2587,16 @@
     }
     const stakeEl = document.getElementById('bb-stake');
     safeSet('bb-curstake', '$' + (bbStats.curStake || (stakeEl ? parseFloat(stakeEl.value) : 0)).toFixed(2));
+
+    // Update right panel summary
+    safeSet('rp-num-runs', bbStats.total);
+    safeSet('rp-contracts-won', bbStats.wins);
+    safeSet('rp-contracts-lost', losses);
+    const rpPl = document.getElementById('rp-total-pl');
+    if (rpPl) {
+      rpPl.textContent = (pl >= 0 ? '+' : '') + pl.toFixed(2) + ' USD';
+      rpPl.className   = 'rp-stat-value ' + (pl >= 0 ? 'green' : 'red');
+    }
   }
 
   function addTradeLogEntry(id, won, profit, entry, exit) {
