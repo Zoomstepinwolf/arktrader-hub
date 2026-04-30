@@ -1498,7 +1498,7 @@
   </aside>
 
   <!-- MAIN AREA -->
-  <main class="main-content" style="padding-bottom: 48px;">
+  <main class="main-content" id="main-content" style="padding-bottom: 48px;">
 
     <!-- DASHBOARD PAGE -->
     <div id="page-dashboard" class="page active">
@@ -1561,132 +1561,21 @@
 
     <!-- BOT BUILDER PAGE -->
     <div id="page-botbuilder" class="page">
-      <div class="dash-header">
-        <div>
-          <div class="dash-title">Bot Builder</div>
-          <div class="dash-sub">Configure and run your automated trading bot.</div>
-        </div>
-        <button class="run-btn" id="bb-run-btn" onclick="toggleBot()">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Run Bot
-        </button>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-        <!-- Config card -->
-        <div class="rc-card">
-          <div class="rc-card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#e84b1a" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            Bot Configuration
-          </div>
-          <div class="form-group">
-            <label class="form-label">MARKET</label>
-            <select class="form-input" id="bb-symbol">
-              <option value="R_10">Volatility 10 Index</option>
-              <option value="R_25">Volatility 25 Index</option>
-              <option value="R_50" selected>Volatility 50 Index</option>
-              <option value="R_75">Volatility 75 Index</option>
-              <option value="R_100">Volatility 100 Index</option>
-              <option value="1HZ10V">Volatility 10 (1s)</option>
-              <option value="1HZ100V">Volatility 100 (1s)</option>
-            </select>
-          </div>
-          <div class="rc-grid2">
-            <div class="form-group">
-              <label class="form-label">CONTRACT TYPE</label>
-              <select class="form-input" id="bb-contract">
-                <option value="DIGITEVEN">Digit Even</option>
-                <option value="DIGITODD">Digit Odd</option>
-                <option value="DIGITMATCH">Digit Match</option>
-                <option value="DIGITDIFF">Digit Differ</option>
-                <option value="DIGITOVER">Digit Over</option>
-                <option value="DIGITUNDER">Digit Under</option>
-                <option value="CALL">Rise</option>
-                <option value="PUT">Fall</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">DURATION</label>
-              <select class="form-input" id="bb-duration">
-                <option value="1">1 Tick</option>
-                <option value="2">2 Ticks</option>
-                <option value="3">3 Ticks</option>
-                <option value="5" selected>5 Ticks</option>
-                <option value="10">10 Ticks</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">STAKE ($)</label>
-              <input class="form-input" type="number" id="bb-stake" value="0.35" min="0.35" step="0.01">
-            </div>
-            <div class="form-group">
-              <label class="form-label">STRATEGY</label>
-              <select class="form-input" id="bb-strategy">
-                <option value="fixed">Fixed Stake</option>
-                <option value="martingale">Martingale</option>
-                <option value="dalembert">D'Alembert</option>
-              </select>
-            </div>
-          </div>
-          <div class="rc-grid2" style="margin-top:4px">
-            <div class="form-group">
-              <label class="form-label">STOP LOSS ($)</label>
-              <input class="form-input" type="number" id="bb-stoploss" value="5" min="0" step="0.5">
-            </div>
-            <div class="form-group">
-              <label class="form-label">TAKE PROFIT ($)</label>
-              <input class="form-input" type="number" id="bb-takeprofit" value="10" min="0" step="0.5">
-            </div>
-          </div>
-        </div>
-
-        <!-- Live stats card -->
-        <div class="rc-card">
-          <div class="rc-card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
-            Live Session Stats
-          </div>
-          <div class="rc-result-grid">
-            <div class="rc-stat">
-              <div class="rc-stat-label">Total Trades</div>
-              <div class="rc-stat-val" id="bb-total">0</div>
-            </div>
-            <div class="rc-stat">
-              <div class="rc-stat-label">Win Rate</div>
-              <div class="rc-stat-val" id="bb-winrate">—</div>
-            </div>
-            <div class="rc-stat">
-              <div class="rc-stat-label">Profit / Loss</div>
-              <div class="rc-stat-val" id="bb-pl">$0.00</div>
-            </div>
-            <div class="rc-stat">
-              <div class="rc-stat-label">Current Stake</div>
-              <div class="rc-stat-val" id="bb-curstake">—</div>
-            </div>
-          </div>
-          <div id="bb-status-msg" style="margin-top:12px;padding:10px 13px;border-radius:8px;background:var(--surface2);font-size:13px;color:var(--text2);min-height:42px">
-            Configure the bot and press Run Bot to start.
-          </div>
-          <!-- Trade log -->
-          <div style="margin-top:14px">
-            <div style="font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Trade Log</div>
-            <div id="bb-trade-log" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:5px"></div>
-            <div id="bb-log-empty" style="font-size:13px;color:var(--text3);text-align:center;padding:20px 0">No trades yet</div>
-          </div>
-        </div>
+      <!-- Deriv DBot full embed — identical to bot.deriv.com -->
+      <div style="margin:-24px;height:calc(100vh - 64px);overflow:hidden;">
+        <iframe
+          id="dbot-frame"
+          src="https://bot.deriv.com/"
+          style="width:100%;height:100%;border:none;display:block;"
+          allow="autoplay; clipboard-read; clipboard-write"
+          title="Deriv DBot"
+        ></iframe>
       </div>
     </div>
 
     <!-- CHARTS PAGE -->
     <div id="page-charts" class="page">
-      <div class="dash-header">
-        <div>
-          <div class="dash-title">Charts</div>
-          <div class="dash-sub" id="chart-sub">Live professional chart — powered by Deriv SmartCharts.</div>
-        </div>
-      </div>
-
-      <!-- Market selector + live price row -->
+      <!-- Market selector + live tick price strip -->
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
         <select id="chart-symbol" class="form-input" style="max-width:220px;padding:8px 12px" onchange="changeChartSymbol()">
           <optgroup label="Synthetic Indices">
@@ -1720,19 +1609,17 @@
         <iframe
           id="deriv-chart-frame"
           src="https://charts.deriv.com/?symbol=R_50&granularity=0&chart_type=mountain"
-          style="width:100%;height:560px;border:none;display:block;"
+          style="width:100%;height:600px;border:none;display:block;"
           allow="autoplay"
           title="Deriv Live Chart"
         ></iframe>
       </div>
 
-      <!-- Recent ticks strip (fed by public WS) -->
+      <!-- Recent ticks strip -->
       <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:16px">
         <div style="font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Recent Ticks</div>
         <div id="tick-table" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;font-size:12.5px;color:var(--text2);max-height:160px;overflow:hidden"></div>
       </div>
-
-      <!-- Hidden canvas so existing drawChart() calls don't throw errors -->
       <canvas id="tick-chart" style="display:none"></canvas>
     </div>
 
@@ -2161,7 +2048,7 @@
       if (msg.msg_type === 'tick' && msg.tick) handleChartTick(msg.tick);
     };
     pubSocket.onerror = () => {
-      document.getElementById('chart-sub').textContent = '⚠️ Could not connect to Deriv — retrying…';
+      const _cs = document.getElementById('chart-sub'); if (_cs) _cs.textContent = '⚠️ Could not connect to Deriv — retrying…';
       setTimeout(() => connectPublicWS(document.getElementById('chart-symbol').value), 4000);
     };
     pubSocket.onclose = () => clearInterval(pubPing);
@@ -2212,8 +2099,8 @@
     if (acctInfo) {
       lb.style.display = 'none';
       ad.style.display = 'flex';
-      document.getElementById('acct-id').textContent      = acctInfo.acct;
-      document.getElementById('acct-balance').textContent = acctInfo.balance != null
+      const _ai = document.getElementById('acct-id'); if (_ai) _ai.textContent = acctInfo.acct;
+      const _ab = document.getElementById('acct-balance'); if (_ab) _ab.textContent = acctInfo.balance != null
         ? `${parseFloat(acctInfo.balance).toFixed(2)} ${acctInfo.currency}`
         : acctInfo.currency || '';
     } else {
@@ -2262,8 +2149,8 @@
       if (msg.msg_type === 'authorize') {
         if (msg.error) { updateStatusBar(false, 'Auth error: ' + msg.error.message); return; }
         const info = msg.authorize;
-        document.getElementById('acct-id').textContent      = acctObj.acct;
-        document.getElementById('acct-balance').textContent = `${parseFloat(info.balance).toFixed(2)} ${info.currency}`;
+        const _aid = document.getElementById('acct-id'); if (_aid) _aid.textContent = acctObj.acct;
+        const _abd = document.getElementById('acct-balance'); if (_abd) _abd.textContent = `${parseFloat(info.balance).toFixed(2)} ${info.currency}`;
         document.getElementById('login-buttons').style.display = 'none';
         document.getElementById('account-display').style.display = 'flex';
         // Subscribe to balance stream
@@ -2361,9 +2248,9 @@
   function changeChartSymbol() {
     const sym = document.getElementById('chart-symbol').value;
     chartTicks = [];
-    document.getElementById('chart-live-price').textContent = '—';
-    document.getElementById('chart-price-change').textContent = '—';
-    document.getElementById('tick-table').innerHTML = '';
+    const _lp = document.getElementById('chart-live-price'); if (_lp) _lp.textContent = '—';
+    const _pc = document.getElementById('chart-price-change'); if (_pc) _pc.textContent = '—';
+    const _tt = document.getElementById('tick-table'); if (_tt) _tt.innerHTML = '';
     // Update the Deriv SmartCharts iframe
     const frame = document.getElementById('deriv-chart-frame');
     if (frame) frame.src = `https://charts.deriv.com/?symbol=${sym}&granularity=0&chart_type=mountain`;
@@ -2373,9 +2260,9 @@
 
   function clearChart() {
     chartTicks = [];
-    document.getElementById('chart-live-price').textContent = '—';
-    document.getElementById('chart-price-change').textContent = '—';
-    document.getElementById('tick-table').innerHTML = '';
+    const _clp2 = document.getElementById('chart-live-price'); if (_clp2) _clp2.textContent = '—';
+    const _cpc2 = document.getElementById('chart-price-change'); if (_cpc2) _cpc2.textContent = '—';
+    const _tt2 = document.getElementById('tick-table'); if (_tt2) _tt2.innerHTML = '';
     drawChart();
   }
 
@@ -2510,16 +2397,20 @@
     if (!socket || socket.readyState !== WebSocket.OPEN) {
       alert('Not connected to Deriv. Please log in first.'); return;
     }
+    const stakeEl = document.getElementById('bb-stake');
     botRunning = true;
-    bbStats = { total: 0, wins: 0, pl: 0, curStake: parseFloat(document.getElementById('bb-stake').value) };
+    bbStats = { total: 0, wins: 0, pl: 0, curStake: stakeEl ? parseFloat(stakeEl.value) : 0.35 };
     updateBotStats();
-    document.getElementById('bb-trade-log').innerHTML = '';
-    document.getElementById('bb-log-empty').style.display = 'block';
+    const logEl = document.getElementById('bb-trade-log');
+    const emptyEl = document.getElementById('bb-log-empty');
+    if (logEl) logEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
 
     const btn = document.getElementById('bb-run-btn');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Stop Bot';
-    btn.style.background = 'var(--red)';
-
+    if (btn) {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Stop Bot';
+      btn.style.background = 'var(--red)';
+    }
     setBotStatus('🤖 Bot started — placing first trade…', null);
     placeNextTrade();
   }
@@ -2580,16 +2471,21 @@
   function updateBotStats() {
     const wr = bbStats.total ? ((bbStats.wins / bbStats.total) * 100).toFixed(1) + '%' : '—';
     const pl = bbStats.pl;
-    document.getElementById('bb-total').textContent    = bbStats.total;
-    document.getElementById('bb-winrate').textContent  = wr;
+    const safeSet = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    safeSet('bb-total', bbStats.total);
+    safeSet('bb-winrate', wr);
     const plEl = document.getElementById('bb-pl');
-    plEl.textContent  = (pl >= 0 ? '+' : '') + '$' + Math.abs(pl).toFixed(2);
-    plEl.className    = 'rc-stat-val ' + (pl >= 0 ? 'green' : 'red');
-    document.getElementById('bb-curstake').textContent = '$' + (bbStats.curStake || parseFloat(document.getElementById('bb-stake').value)).toFixed(2);
+    if (plEl) {
+      plEl.textContent = (pl >= 0 ? '+' : '') + '$' + Math.abs(pl).toFixed(2);
+      plEl.className   = 'rc-stat-val ' + (pl >= 0 ? 'green' : 'red');
+    }
+    const stakeEl = document.getElementById('bb-stake');
+    safeSet('bb-curstake', '$' + (bbStats.curStake || (stakeEl ? parseFloat(stakeEl.value) : 0)).toFixed(2));
   }
 
   function addTradeLogEntry(id, won, profit, entry, exit) {
     const log   = document.getElementById('bb-trade-log');
+    if (!log) return;
     const empty = document.getElementById('bb-log-empty');
     if (empty) empty.style.display = 'none';
     const div = document.createElement('div');
@@ -2641,7 +2537,7 @@
     document.getElementById('moon-icon').style.display = isDark ? 'none'  : 'block';
     document.getElementById('sidebar-sun').style.display  = isDark ? 'block' : 'none';
     document.getElementById('sidebar-moon').style.display = isDark ? 'none'  : 'block';
-    document.getElementById('sidebar-theme-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+    const _stl = document.getElementById('sidebar-theme-label'); if (_stl) _stl.textContent = isDark ? 'Light mode' : 'Dark mode';
     // redraw chart with new theme
     setTimeout(drawChart, 50);
   }
@@ -2711,10 +2607,10 @@
     const maxLoss       = stake * runs;
     const netProfit     = (tradesNeeded * profitPerWin) - ((runs - tradesNeeded) * stake);
 
-    document.getElementById('rc-trades-needed').textContent = tradesNeeded;
-    document.getElementById('rc-win-rate').textContent      = winRate.toFixed(1) + '%';
-    document.getElementById('rc-max-loss').textContent      = '$' + maxLoss.toFixed(2);
-    document.getElementById('rc-net-profit').textContent    = (netProfit >= 0 ? '+' : '') + '$' + netProfit.toFixed(2);
+    const _rtn = document.getElementById('rc-trades-needed'); if (_rtn) _rtn.textContent = tradesNeeded;
+    const _rwr = document.getElementById('rc-win-rate'); if (_rwr) _rwr.textContent = winRate.toFixed(1) + '%';
+    const _rml = document.getElementById('rc-max-loss'); if (_rml) _rml.textContent = '$' + maxLoss.toFixed(2);
+    const _rnp = document.getElementById('rc-net-profit'); if (_rnp) _rnp.textContent = (netProfit >= 0 ? '+' : '') + '$' + netProfit.toFixed(2);
     document.getElementById('rc-net-profit').className      = 'rc-stat-val ' + (netProfit >= 0 ? 'green' : 'red');
 
     // AI tip
@@ -2725,7 +2621,7 @@
     else                    tip = '💡 Balanced plan. Aim for consistent entries and stick to your stake size.';
     if (stake < 0.35)       tip += ' Note: Deriv minimum stake is $0.35.';
 
-    document.getElementById('rc-ai-tip').textContent = tip;
+    const _rat = document.getElementById('rc-ai-tip'); if (_rat) _rat.textContent = tip;
     document.getElementById('rc-result').style.display = 'block';
   }
 
@@ -2850,10 +2746,18 @@
 
   function tick() {
     const now = new Date();
-    document.getElementById('clock').textContent = now.toISOString().replace('T',' ').substring(0,19) + ' GMT';
+    const _clk = document.getElementById('clock'); if (_clk) _clk.textContent = now.toISOString().replace('T',' ').substring(0,19) + ' GMT';
   }
   tick(); setInterval(tick, 1000);
-  window.addEventListener('resize', () => { if (document.getElementById('page-charts').classList.contains('active')) drawChart(); });
+  window.addEventListener('resize', () => { const pc = document.getElementById('page-charts'); if (pc && pc.classList.contains('active')) drawChart(); });
+
+  // Patch showPage to remove padding for botbuilder iframe
+  const _origShowPage = showPage;
+  showPage = function(id, tabEl) {
+    _origShowPage(id, tabEl);
+    const mc = document.getElementById('main-content');
+    if (mc) mc.style.padding = (id === 'botbuilder') ? '0' : '24px';
+  };
 
   /* ── AI TRADING CALCULATOR ─────────────── */
 
