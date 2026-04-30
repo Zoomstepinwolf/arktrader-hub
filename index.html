@@ -2126,6 +2126,35 @@
   let currentContract = null;
   let bbStats     = { total:0, wins:0, pl:0, curStake:0 };
 
+  // ── PUBLIC chart WebSocket (no login required) ──
+  let pubSocket   = null;
+  let pubPing     = null;
+
+  function connectPublicWS(symbol) {
+    if (pubSocket) { pubSocket.close(); pubSocket = null; }
+    clearInterval(pubPing);
+    chartTicks = [];
+    drawChart();
+
+    pubSocket = new WebSocket(WS_URL);
+    pubSocket.onopen = () => {
+      pubSocket.send(JSON.stringify({ ticks: symbol, subscribe: 1 }));
+      pubPing = setInterval(() => {
+        if (pubSocket && pubSocket.readyState === WebSocket.OPEN)
+          pubSocket.send(JSON.stringify({ ping: 1 }));
+      }, 25000);
+    };
+    pubSocket.onmessage = (ev) => {
+      const msg = JSON.parse(ev.data);
+      if (msg.msg_type === 'tick' && msg.tick) handleChartTick(msg.tick);
+    };
+    pubSocket.onerror = () => {
+      document.getElementById('chart-sub').textContent = '⚠️ Could not connect to Deriv — retrying…';
+      setTimeout(() => connectPublicWS(document.getElementById('chart-symbol').value), 4000);
+    };
+    pubSocket.onclose = () => clearInterval(pubPing);
+  }
+
   /* ═══════════════════════════════════════════════════════
      OAUTH
   ═══════════════════════════════════════════════════════ */
@@ -2313,11 +2342,8 @@
   const MAX_TICKS = 80;
 
   function startTickSubscription(symbol) {
-    if (!socket || socket.readyState !== WebSocket.OPEN) return;
-    // Forget old subscription
-    if (tickSub) { socket.send(JSON.stringify({ forget: tickSub })); tickSub = null; }
-    chartTicks = [];
-    socket.send(JSON.stringify({ ticks: symbol, subscribe: 1 }));
+    // Use public chart socket (works with or without login)
+    connectPublicWS(symbol);
   }
 
   function changeChartSymbol() {
@@ -2326,7 +2352,7 @@
     document.getElementById('chart-live-price').textContent = '—';
     document.getElementById('chart-price-change').textContent = '—';
     document.getElementById('tick-table').innerHTML = '';
-    startTickSubscription(sym);
+    connectPublicWS(sym);
   }
 
   function clearChart() {
@@ -2579,6 +2605,9 @@
     } else {
       updateStatusBar(false, 'Not connected — click Log in');
     }
+
+    // ── Start live chart immediately (no login required) ──
+    connectPublicWS(document.getElementById('chart-symbol').value);
   })();
 
   /* ═══════════════════════════════════════════════════════
