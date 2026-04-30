@@ -1682,9 +1682,11 @@
       <div class="dash-header">
         <div>
           <div class="dash-title">Charts</div>
-          <div class="dash-sub" id="chart-sub">Live tick feed — select a market below.</div>
+          <div class="dash-sub" id="chart-sub">Live professional chart — powered by Deriv SmartCharts.</div>
         </div>
       </div>
+
+      <!-- Market selector + live price row -->
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
         <select id="chart-symbol" class="form-input" style="max-width:220px;padding:8px 12px" onchange="changeChartSymbol()">
           <optgroup label="Synthetic Indices">
@@ -1711,17 +1713,27 @@
         </select>
         <div id="chart-live-price" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--text)">—</div>
         <div id="chart-price-change" style="font-size:13px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--surface2);color:var(--text3)">—</div>
-        <div style="margin-left:auto">
-          <button class="btn-outline" style="font-size:12px;padding:5px 10px" onclick="clearChart()">Clear</button>
-        </div>
       </div>
-      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px">
-        <canvas id="tick-chart" style="width:100%;height:260px;display:block"></canvas>
+
+      <!-- Deriv SmartCharts professional chart embed -->
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;">
+        <iframe
+          id="deriv-chart-frame"
+          src="https://charts.deriv.com/?symbol=R_50&granularity=0&chart_type=mountain"
+          style="width:100%;height:560px;border:none;display:block;"
+          allow="autoplay"
+          title="Deriv Live Chart"
+        ></iframe>
       </div>
+
+      <!-- Recent ticks strip (fed by public WS) -->
       <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:16px">
         <div style="font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Recent Ticks</div>
         <div id="tick-table" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;font-size:12.5px;color:var(--text2);max-height:160px;overflow:hidden"></div>
       </div>
+
+      <!-- Hidden canvas so existing drawChart() calls don't throw errors -->
+      <canvas id="tick-chart" style="display:none"></canvas>
     </div>
 
     <!-- FREEBOTS PAGE -->
@@ -2352,6 +2364,10 @@
     document.getElementById('chart-live-price').textContent = '—';
     document.getElementById('chart-price-change').textContent = '—';
     document.getElementById('tick-table').innerHTML = '';
+    // Update the Deriv SmartCharts iframe
+    const frame = document.getElementById('deriv-chart-frame');
+    if (frame) frame.src = `https://charts.deriv.com/?symbol=${sym}&granularity=0&chart_type=mountain`;
+    // Also update our public WS tick feed
     connectPublicWS(sym);
   }
 
